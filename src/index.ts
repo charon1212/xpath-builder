@@ -1,3 +1,1 @@
-export const hello = () => {
-  console.log('hello');
-};
+export { xpathBuilder } from './main/xpath';

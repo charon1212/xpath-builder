@@ -1,0 +1,29 @@
+{
+  "name": "@charon1212/xpath-builder",
+  "version": "0.0.1",
+  "description": "A xpath build helper.",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "tsc",
+    "test": "jest"
+  },
+  "files": [
+    "build",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/charon1212/xpath-builder.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/charon1212/xpath-builder/issues"
+  },
+  "homepage": "https://github.com/charon1212/xpath-builder#readme"
+}

@@ -19,7 +19,7 @@ class XPath {
   el(tag: HTMLTagName | '*', ...options: ElementOption[]) {
     if (!this.text) this.throwErrorFirstElement();
     const op = parseElementOptions(options);
-    this.text += `${tag}` + op ? `[${op}]` : '' + '/';
+    this.text += `${tag}` + (op ? `[${op}]` : '') + '/';
     return this;
   }
   /**

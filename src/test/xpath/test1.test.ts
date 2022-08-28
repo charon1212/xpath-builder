@@ -1,3 +1,6 @@
-test('should first', () => {
-  expect(2 + 3).toBe(5);
+import { xpathBuilder } from '../../main/xpath';
+
+test('tagName', () => {
+  const xpath = xpathBuilder().root().el('h2').get();
+  expect(xpath).toBe('/h2');
 });

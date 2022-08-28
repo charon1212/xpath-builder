@@ -72,6 +72,7 @@ const parseElementOptions = (list: ElementOption[]) => {
     if (arr.length === 1) return arr[0];
     return arr.map((v) => `(${v})`).join(' and ');
   }).filter((v) => v);
+  if (options.length === 1) return options[0];
   return options.map((op) => `(${op})`).join(' or ');
 };
 

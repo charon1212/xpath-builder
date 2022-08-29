@@ -1,14 +1,10 @@
 export const xpathBuilder = () => new XPath();
 
 class XPath {
-  private text: string = '';
+  private text: string = '/';
   constructor() { };
-  root() {
-    this.text = '/';
-    return this;
-  }
   rel() {
-    this.text += this.text ? '/' : '//';
+    this.text += '/';
     return this;
   }
   /**
@@ -62,11 +58,11 @@ const parseElementOptions = (list: ElementOption[]) => {
   const options = list.map((op) => {
     const { id, className, attr, position } = op;
     const arr = [] as string[];
-    if (id) arr.push(`@id='${id}'`);
-    if (className) arr.push(`@class='${className}'`);
+    if (id) arr.push(createAttributeQuery('id', id));
+    if (className) arr.push(createAttributeQuery('class', className));
     if (attr) {
       const attrArray = Array.isArray(attr) ? attr : [attr];
-      arr.push(...attrArray.map(({ key, value }) => `@${key}='${value}'`));
+      arr.push(...attrArray.map(({ key, value }) => createAttributeQuery(key, value)));
     }
     if (position !== undefined) arr.push(`position()=${position}`);
     if (arr.length === 1) return arr[0];
@@ -76,9 +72,22 @@ const parseElementOptions = (list: ElementOption[]) => {
   return options.map((op) => `(${op})`).join(' or ');
 };
 
+const createAttributeQuery = (key: string, value: AttributeValue): string => {
+  if (typeof value === 'string') return `@${key}='${value}'`;
+  if ('startsWith' in value) return `starts-with(@${key},'${value.startsWith}')`;
+  if ('contains' in value) return `contains(@${key},'${value.contains}')`;
+  return `not(@${key}='${value.not}')`;
+};
+
 type ElementOption = {
-  id?: string,
-  className?: string,
-  attr?: { key: string, value: string } | { key: string, value: string }[],
+  id?: AttributeValue,
+  className?: AttributeValue,
+  attr?: { key: string, value: AttributeValue } | { key: string, value: AttributeValue }[],
   position?: number,
 };
+
+type AttributeValue =
+  | string
+  | { not: string }
+  | { startsWith: string }
+  | { contains: string };

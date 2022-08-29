@@ -13,7 +13,6 @@ class XPath {
    * @param options オプション。
    */
   el(tag: HTMLTagName | '*', ...options: ElementOption[]) {
-    if (!this.text) this.throwErrorFirstElement();
     const op = parseElementOptions(options);
     this.text += `${tag}` + (op ? `[${op}]` : '') + '/';
     return this;
@@ -22,7 +21,6 @@ class XPath {
    * 親要素にアクセスする。　例：//span[@class='hoge']/../../div
    */
   parent() {
-    if (!this.text) this.throwErrorFirstElement();
     this.text += '../';
     return this;
   }
@@ -30,7 +28,6 @@ class XPath {
    * 同じ親の内、この要素より後の要素にアクセスする。　//span/following-sibling::td
    */
   followingSibling() {
-    if (!this.text) this.throwErrorFirstElement();
     this.text += 'following-sibling::';
     return this;
   }
@@ -38,7 +35,6 @@ class XPath {
    * 同じ親の内、この要素より前の要素にアクセスする。　//span/preceding-sibling::td
    */
   precedingSibling() {
-    if (!this.text) this.throwErrorFirstElement();
     this.text += 'preceding-sibling::';
     return this;
   }
@@ -48,9 +44,6 @@ class XPath {
   get() {
     if (!this.text) return '';
     return this.text.substring(0, this.text.length - 1);
-  }
-  private throwErrorFirstElement() {
-    throw new Error('first element must root() or rel().')
   }
 }
 

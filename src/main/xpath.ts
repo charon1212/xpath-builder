@@ -27,16 +27,16 @@ class XPath {
   /**
    * 同じ親の内、この要素より後の要素にアクセスする。　//span/following-sibling::td
    */
-  followingSibling() {
+  followingSibling(tag: HTMLTagName | '*', ...options: ElementOption[]) {
     this.text += 'following-sibling::';
-    return this;
+    return this.el(tag, ...options);
   }
   /**
    * 同じ親の内、この要素より前の要素にアクセスする。　//span/preceding-sibling::td
    */
-  precedingSibling() {
+  precedingSibling(tag: HTMLTagName | '*', ...options: ElementOption[]) {
     this.text += 'preceding-sibling::';
-    return this;
+    return this.el(tag, ...options);
   }
   /**
    * このxpathの文字列表現を取得する。

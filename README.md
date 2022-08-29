@@ -113,7 +113,7 @@ const xpath = xpathBuilder().desc().el('div', { id: 'aaa' }).parent().get();
 ```typescript
 // idが'aaa'であるdiv要素の前の要素のp要素
 //   => //div/preceding-sibling::p
-const xpath = xpathBuilder().desc().el('div', { id: 'aaa' }).precedingSibling().el('p').get();
+const xpath = xpathBuilder().desc().el('div', { id: 'aaa' }).precedingSibling('p').get();
 ```
 
 - 後の要素(<https://developer.mozilla.org/ja/docs/Web/XPath/Axes/following-sibling>)
@@ -121,5 +121,5 @@ const xpath = xpathBuilder().desc().el('div', { id: 'aaa' }).precedingSibling().
 ```typescript
 // idが'aaa'であるdiv要素の後の要素のp要素
 //   => //div/following-sibling::p
-const xpath = xpathBuilder().desc().el('div', { id: 'aaa' }).followingSibling().el('p').get();
+const xpath = xpathBuilder().desc().el('div', { id: 'aaa' }).followingSibling('p').get();
 ```

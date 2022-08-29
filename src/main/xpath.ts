@@ -3,7 +3,7 @@ export const xpathBuilder = () => new XPath();
 class XPath {
   private text: string = '/';
   constructor() { };
-  rel() {
+  desc() {
     this.text += '/';
     return this;
   }

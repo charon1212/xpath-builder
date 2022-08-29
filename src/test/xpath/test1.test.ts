@@ -4,7 +4,7 @@ import { outerProd } from 'util-charon1212';
 describe('xpathBuilder_random-test', () => {
   const data = [
     { e: "/h1", xpath: xpathBuilder().el('h1').get(), },
-    { e: "//h1", xpath: xpathBuilder().rel().el('h1').get(), },
+    { e: "//h1", xpath: xpathBuilder().desc().el('h1').get(), },
     { e: "/h1/span[@id='hoge']", xpath: xpathBuilder().el('h1').el('span', { id: 'hoge' }).get(), },
     { e: "/h1/span[@class='hoge']", xpath: xpathBuilder().el('h1').el('span', { className: 'hoge' }).get(), },
     { e: "/h1/span[(@id='hoge') and (@class='fuga')]", xpath: xpathBuilder().el('h1').el('span', { id: 'hoge', className: 'fuga' }).get(), },

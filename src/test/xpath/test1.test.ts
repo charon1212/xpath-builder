@@ -34,3 +34,24 @@ describe('xpathBuilder_key-value-pattern', () => {
     expect(act).toBe(`/div[${exp(key)}]`);
   });
 });
+
+describe('xpathBuilder_README.md', () => {
+  const pattern = [
+    { exp: "//div//td", xpath: xpathBuilder().desc().el('div').desc().el('td').get() },
+    { exp: "//div[@id='hoge']", xpath: xpathBuilder().desc().el('div', { id: 'hoge' }).get() },
+    { exp: "//div[@class='hoge']", xpath: xpathBuilder().desc().el('div', { className: 'hoge' }).get() },
+    { exp: "//div[@src='hoge']", xpath: xpathBuilder().desc().el('div', { attr: { key: 'src', value: 'hoge' } }).get() },
+    { exp: "//table[@id='hoge']//tr[position()=3]//td[position()=5]", xpath: xpathBuilder().desc().el('table', { id: 'hoge' }).desc().el('tr', { position: 3 }).desc().el('td', { position: 5 }).get() },
+    { exp: "//div[(@id='aaa') and (@class='bbb') and (@src='ccc') and (@href='ddd')]", xpath: xpathBuilder().desc().el('div', { id: 'aaa', className: 'bbb', attr: [{ key: 'src', value: 'ccc' }, { key: 'href', value: 'ddd' }] }).get() },
+    { exp: "//div[(@class='aaa') or (@class='bbb')]", xpath: xpathBuilder().desc().el('div', { className: 'aaa' }, { className: 'bbb' }).get() },
+    { exp: "//div[not(@class='aaa')]", xpath: xpathBuilder().desc().el('div', { className: { not: 'aaa' } }).get() },
+    { exp: "//div[contains(@class,'aaa')]", xpath: xpathBuilder().desc().el('div', { className: { contains: 'aaa' } }).get() },
+    { exp: "//div[starts-with(@class,'aaa')]", xpath: xpathBuilder().desc().el('div', { className: { startsWith: 'aaa' } }).get() },
+    { exp: "//div[@id='aaa']/..", xpath: xpathBuilder().desc().el('div', { id: 'aaa' }).parent().get() },
+    { exp: "//div[@id='aaa']/preceding-sibling::p", xpath: xpathBuilder().desc().el('div', { id: 'aaa' }).precedingSibling('p').get() },
+    { exp: "//div[@id='aaa']/following-sibling::p", xpath: xpathBuilder().desc().el('div', { id: 'aaa' }).followingSibling('p').get() },
+  ];
+  test.each(pattern)('test3', ({ exp, xpath }) => {
+    expect(xpath).toBe(exp);
+  })
+})

@@ -104,7 +104,7 @@ const xpath = xpathBuilder().desc().el('div', { className: { startsWith: 'aaa' }
 
 ```typescript
 // idが'aaa'であるdiv要素の親要素
-//   => //div/..
+//   => //div[@id='aaa']/..
 const xpath = xpathBuilder().desc().el('div', { id: 'aaa' }).parent().get();
 ```
 
@@ -112,7 +112,7 @@ const xpath = xpathBuilder().desc().el('div', { id: 'aaa' }).parent().get();
 
 ```typescript
 // idが'aaa'であるdiv要素の前の要素のp要素
-//   => //div/preceding-sibling::p
+//   => //div[@id='aaa']/preceding-sibling::p
 const xpath = xpathBuilder().desc().el('div', { id: 'aaa' }).precedingSibling('p').get();
 ```
 
@@ -120,6 +120,6 @@ const xpath = xpathBuilder().desc().el('div', { id: 'aaa' }).precedingSibling('p
 
 ```typescript
 // idが'aaa'であるdiv要素の後の要素のp要素
-//   => //div/following-sibling::p
+//   => //div[@id='aaa']/following-sibling::p
 const xpath = xpathBuilder().desc().el('div', { id: 'aaa' }).followingSibling('p').get();
 ```

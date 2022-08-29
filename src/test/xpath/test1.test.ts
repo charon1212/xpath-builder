@@ -1,4 +1,4 @@
-import { xpathBuilder } from '../../main/xpath';
+import { xpathBuilder } from '../..';
 import { outerProd } from 'util-charon1212';
 
 describe('xpathBuilder_random-test', () => {

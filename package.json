@@ -1,6 +1,6 @@
 {
   "name": "@charon1212/xpath-builder",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "A xpath build helper.",
   "main": "build/index.js",
   "types": "build/index.d.ts",

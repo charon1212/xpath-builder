@@ -1,5 +1,5 @@
 // cite: https://www.w3schools.com/TAgs/default.asp
-type HTMLTagName =
+export type HTMLTagName =
   | 'a'
   | 'abbr'
   | 'acronym'

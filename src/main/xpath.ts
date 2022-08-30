@@ -1,3 +1,5 @@
+import { HTMLTagName } from "./HTMLTagName";
+
 export const xpathBuilder = () => new XPath();
 
 class XPath {

@@ -16,6 +16,9 @@ import { xpathBuilder } from '@charon1212/xpath-builder'
 // xpathBuilder()から始まり、el等でxpathを指定し、最後にget()する。
 // 例：/html/body/div[@class='hoge']
 const xpath = xpathBuilder().el('html').el('body').el('div', { className: 'hoge' }).get();
+// xpathBuilderに'html'型を渡すと、el等でHTMLタグであるかのチェックをしてくれる。
+const htmlXpath = xpathBuilder<'html'>().el('html').el('body').el('hoge', { className: 'hoge' }).get();
+//                                                                ~~~~~~ <= type error
 ```
 
 詳細
@@ -31,7 +34,7 @@ const xpath = xpathBuilder().desc().el('div').desc().el('td').get();
 - id検索
 
 ```typescript
-// 任意の位置のidが'hoge'のdiv要素
+// idが'hoge'のdiv要素
 //   => //div[@id='hoge']
 const xpath = xpathBuilder().desc().el('div', { id: 'hoge' }).get();
 ```
@@ -39,7 +42,7 @@ const xpath = xpathBuilder().desc().el('div', { id: 'hoge' }).get();
 - class検索
 
 ```typescript
-// 任意の位置のclassが'hoge'のdiv要素
+// classが'hoge'のdiv要素
 //   => //div[@class='hoge']
 const xpath = xpathBuilder().desc().el('div', { className: 'hoge' }).get();
 ```
@@ -47,7 +50,7 @@ const xpath = xpathBuilder().desc().el('div', { className: 'hoge' }).get();
 - src検索 (id,class以外の属性)
 
 ```typescript
-// 任意の位置のsrcが'hoge'のdiv要素
+// srcが'hoge'のdiv要素
 //   => //div[@src='hoge']
 const xpath = xpathBuilder().desc().el('div', { attr: { key: 'src', value: 'hoge' } }).get();
 ```

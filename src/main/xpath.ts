@@ -1,8 +1,10 @@
 import { HTMLTagName } from "./HTMLTagName";
 
-export const xpathBuilder = () => new XPath();
+export const xpathBuilder = <T extends string = string>() => new XPath<T>();
 
-class XPath {
+type TagName<T> = (T extends 'html' ? HTMLTagName : string) | '*';
+
+class XPath<T extends string = string> {
   private text: string = '/';
   constructor() { };
   desc() {
@@ -11,12 +13,12 @@ class XPath {
   }
   /**
    * 子要素にアクセスする。
-   * @param tag HTMLタグ名。特定しない場合は'*'を指定する。
+   * @param tag タグ名。特定しない場合は'*'を指定する。
    * @param options オプション。
    */
-  el(tag: HTMLTagName | '*', ...options: ElementOption[]) {
+  el(tag: TagName<T>, ...options: ElementOption[]) {
     const op = parseElementOptions(options);
-    this.text += `${tag}` + (op ? `[${op}]` : '') + '/';
+    this.text += `${tag}` + (op && `[${op}]`) + '/';
     return this;
   }
   /**
@@ -28,15 +30,19 @@ class XPath {
   }
   /**
    * 同じ親の内、この要素より後の要素にアクセスする。　//span/following-sibling::td
+   * @param tag タグ名。特定しない場合は'*'を指定する。
+   * @param options オプション。
    */
-  followingSibling(tag: HTMLTagName | '*', ...options: ElementOption[]) {
+  followingSibling(tag: TagName<T>, ...options: ElementOption[]) {
     this.text += 'following-sibling::';
     return this.el(tag, ...options);
   }
   /**
    * 同じ親の内、この要素より前の要素にアクセスする。　//span/preceding-sibling::td
+   * @param tag タグ名。特定しない場合は'*'を指定する。
+   * @param options オプション。
    */
-  precedingSibling(tag: HTMLTagName | '*', ...options: ElementOption[]) {
+  precedingSibling(tag: TagName<T>, ...options: ElementOption[]) {
     this.text += 'preceding-sibling::';
     return this.el(tag, ...options);
   }

@@ -37,6 +37,7 @@ describe('xpathBuilder_key-value-pattern', () => {
 
 describe('xpathBuilder_README.md', () => {
   const pattern = [
+    { exp: "/html/body/div[@class='hoge']", xpath: xpathBuilder().el('html').el('body').el('div', { className: 'hoge' }).get() },
     { exp: "//div//td", xpath: xpathBuilder().desc().el('div').desc().el('td').get() },
     { exp: "//div[@id='hoge']", xpath: xpathBuilder().desc().el('div', { id: 'hoge' }).get() },
     { exp: "//div[@class='hoge']", xpath: xpathBuilder().desc().el('div', { className: 'hoge' }).get() },

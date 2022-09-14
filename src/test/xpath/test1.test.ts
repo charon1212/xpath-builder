@@ -1,5 +1,8 @@
 import { xpathBuilder } from '../..';
-import { outerProd } from 'util-charon1212';
+import { outerProd, innerProd } from 'util-charon1212';
+import * as x from 'xpath';
+import * as fs from 'fs';
+import { DOMParser } from 'xmldom';
 
 describe('xpathBuilder_random-test', () => {
   const data = [
@@ -56,3 +59,35 @@ describe('xpathBuilder_README.md', () => {
     expect(xpath).toBe(exp);
   })
 })
+
+const assertIsNode = (node: x.SelectedValue): Element => {
+  if (typeof node !== 'object') throw new Error('ノードがPrimitive値です。');
+  return node as Element;
+};
+describe('xpathBuilder_execute-xpath-query', () => {
+  const htmlSample1 = fs.readFileSync('src/test/xpath/xpathBuilder/sample1.html').toString();
+  const domSample1 = new DOMParser().parseFromString(htmlSample1);
+  const pattern = [
+    { xpath: xpathBuilder().el('div').el('span').el('div').get(), expectIdList: ['id3-1', 'id3-2', 'id3-3'] },
+    { xpath: xpathBuilder().desc().el('span', { id: 'id4-1' }).el('p').get(), expectIdList: ['id5-p-1'] },
+    { xpath: xpathBuilder().desc().el('span', { className: 'class4-1' }).el('p').get(), expectIdList: ['id5-p-1'] },
+    { xpath: xpathBuilder().desc().el('span', { attr: { key: 'attr', value: 'attr4-1' } }).el('p').get(), expectIdList: ['id5-p-1'] },
+    { xpath: xpathBuilder().el('div').el('span').el('div', { position: 2 }).get(), expectIdList: ['id3-2'] },
+    { xpath: xpathBuilder().desc().el('span', { className: 'class4-1', attr: [{ key: 'attr', value: 'attr4-1' }, { key: 'test', value: 'test4-1' }] }).get(), expectIdList: ['id4-1'] },
+    { xpath: xpathBuilder().desc().el('span', { className: 'class4-2' }, { className: 'class4-4' }).get(), expectIdList: ['id4-2', 'id4-4'] },
+    { xpath: xpathBuilder().desc().el('span', { id: 'id2-1' }).el('div', { id: { not: 'id3-2' } }).get(), expectIdList: ['id3-1', 'id3-3'], },
+    { xpath: xpathBuilder().desc().el('span', { className: { contains: 'ss4-' } }).get(), expectIdList: ['id4-1', 'id4-2', 'id4-3', 'id4-4', 'id4-5', 'id4-6', 'id4-7', 'id4-8', 'id4-9',], },
+    { xpath: xpathBuilder().desc().el('span', { className: { startsWith: 'class4-' } }).get(), expectIdList: ['id4-1', 'id4-2', 'id4-3', 'id4-4', 'id4-5', 'id4-6', 'id4-7', 'id4-8', 'id4-9',], },
+    { xpath: xpathBuilder().desc().el('span', { id: 'id4-7' }).parent().get(), expectIdList: ['id3-3'], },
+    { xpath: xpathBuilder().desc().el('span', { id: 'id4-7' }).followingSibling('span').get(), expectIdList: ['id4-8', 'id4-9'], },
+    { xpath: xpathBuilder().desc().el('span', { id: 'id4-9' }).precedingSibling('span').get(), expectIdList: ['id4-7', 'id4-8'], },
+  ];
+  test.each(pattern)('test-4', ({ xpath, expectIdList }) => {
+    const nodes = x.select(xpath, domSample1);
+    expect(nodes.length).toBe(expectIdList.length);
+    for (let [n, expectId] of innerProd(nodes, expectIdList)) {
+      const node = assertIsNode(n);
+      expect(node.getAttribute('id')).toBe(expectId);
+    }
+  });
+});

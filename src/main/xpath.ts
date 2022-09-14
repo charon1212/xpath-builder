@@ -62,8 +62,7 @@ const parseElementOptions = (list: ElementOption[]) => {
     if (id) arr.push(createAttributeQuery('id', id));
     if (className) arr.push(createAttributeQuery('class', className));
     if (attr) {
-      const attrArray = Array.isArray(attr) ? attr : [attr];
-      arr.push(...attrArray.map(({ key, value }) => createAttributeQuery(key, value)));
+      for (let key in attr) arr.push(createAttributeQuery(key, attr[key]));
     }
     if (position !== undefined) arr.push(`position()=${position}`);
     if (arr.length === 1) return arr[0];
@@ -83,7 +82,7 @@ const createAttributeQuery = (key: string, value: AttributeValue): string => {
 type ElementOption = {
   id?: AttributeValue,
   className?: AttributeValue,
-  attr?: { key: string, value: AttributeValue } | { key: string, value: AttributeValue }[],
+  attr?: { [key in string]: AttributeValue },
   position?: number,
 };
 

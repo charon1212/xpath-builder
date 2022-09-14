@@ -52,7 +52,7 @@ const xpath = xpathBuilder().desc().el('div', { className: 'hoge' }).get();
 ```typescript
 // srcが'hoge'のdiv要素
 //   => //div[@src='hoge']
-const xpath = xpathBuilder().desc().el('div', { attr: { key: 'src', value: 'hoge' } }).get();
+const xpath = xpathBuilder().desc().el('div', { attr: { src: 'hoge' } }).get();
 ```
 
 - position指定
@@ -68,7 +68,7 @@ const xpath = xpathBuilder().desc().el('table', { id: 'hoge' }).desc().el('tr', 
 ```typescript
 // 任意の位置の、「idが'aaa'」かつ「classが'bbb'」かつ「srcが'ccc'」かつ「hrefが'ddd'」であるdiv要素
 //   => //div[(@id='aaa') and (@class='bbb') and (@src='ccc') and (@href='ddd')]
-const xpath = xpathBuilder().desc().el('div', { id: 'aaa', className: 'bbb', attr: [{ key: 'src', value: 'ccc' }, { key: 'href', value: 'ddd' }] }).get();
+const xpath = xpathBuilder().desc().el('div', { id: 'aaa', className: 'bbb', attr: [{ src: 'ccc' }, { href: 'ddd' }] }).get();
 ```
 
 - 複数検索(OR)
